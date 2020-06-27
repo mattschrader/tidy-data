@@ -10,7 +10,7 @@ mean_std_data <- data_set %>% select(subject, code, contains("mean"), contains("
 # Step 3: name the activities in the data set with the descriptive activity names
 mean_std_data$code <- activities[mean_std_data$code, 2]
 
-# Step 4: create a second, independent tidy data set with the average of each variable for each activity and each subject
+# Step 4: appropriately labels the data set with descriptive variable names
 data_cols <- colnames(mean_std_data)
 data_cols <- gsub("^f", "frequencyDomain", data_cols)
 data_cols <- gsub("^t", "timeDomain", data_cols)
@@ -24,6 +24,7 @@ data_cols <- gsub("BodyBody", "Body", data_cols)
 colnames(mean_std_data) <- data_cols
 names(mean_std_data)[2] = "activity"
 
+# Step 5: create a second, independent tidy data set with the average of each variable for each activity and each subject
 clean_data <- mean_std_data %>%
         group_by(subject, activity) %>%
         summarise_all(funs(mean))
